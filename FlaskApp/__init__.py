@@ -29,11 +29,5 @@ def index():
     return render_template("index.html", profile=userprofile, title="Home")
 
 
-@app.route("/edit/")
-def edit():
-    userprofile = db.session.execute(db.select(Profile)).fetchone()
-    return render_template("edit.html", profile=userprofile)
-
-
 if __name__ == "__main__":
     app.run()

@@ -1,8 +1,11 @@
+import os
 from flask import Flask, render_template
 from .extensions import db
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tbc.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
+app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY')
+app.config['SITE_NAME'] = os.getenv('FLASK_SITE_NAME')
 db.init_app(app)
 
 with app.app_context():
@@ -22,17 +25,14 @@ with app.app_context():
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    userprofile = db.session.execute(db.select(Profile)).scalar_one_or_none()
+    return render_template("index.html", profile=userprofile, title="Home")
 
 
-@app.route("/hello/<name>", methods=['GET'])
-def hello(name: str):
-    return f"hello {name}"
-
-
-@app.route("/module")
-def module():
-    return f"loaded from FlaskApp.package.module = {MODULE_VALUE}"
+@app.route("/edit/")
+def edit():
+    userprofile = db.session.execute(db.select(Profile)).fetchone()
+    return render_template("edit.html", profile=userprofile)
 
 
 if __name__ == "__main__":

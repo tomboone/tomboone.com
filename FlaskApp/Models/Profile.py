@@ -17,3 +17,6 @@ class Profile(db.Model):
     employers: Mapped[List['Employer']] = relationship(back_populates='profile')
     consulting: Mapped[List['Consulting']] = relationship(back_populates='profile')
     education: Mapped[List['Education']] = relationship(back_populates='profile')
+
+    def __repr__(self):
+        return f'<Profile {self.id}>'

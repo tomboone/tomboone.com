@@ -27,12 +27,12 @@
             <div class="container text-center">
                 <h1 class="visually-hidden">{{ config['SITE_NAME'] }}</h1>
                 <div class="row">
-                    <div id="photo" class="col col-6">
-                        <img src="{{ url_for('static', filename="images/profile.jpg") }}" alt="{{ config['SITE_NAME'] }} profile photo"/>
+                    <div id="photo" class="col col-12 col-lg-6">
+                        <img src="{{ url_for('static', filename="images/profile.jpg") }}" class="img-fluid" alt="{{ config['SITE_NAME'] }} profile photo"/>
                     </div>
-                    <div class="col col-6">
+                    <div class="col col-12 col-lg-6">
                         <div id="logo" class="p-5">
-                            <img src="{{ url_for('static', filename="images/logo.png") }}" alt="{{ config['SITE_NAME'] }} logo"/>
+                            <img src="{{ url_for('static', filename="images/logo.png") }}" class="img-fluid" alt="{{ config['SITE_NAME'] }} logo"/>
                         </div>
                         <div id="profile" class="container text-start">
                             <div id="profile-header" class="pb-3 mb-3 border-bottom border-bottom-secondary">

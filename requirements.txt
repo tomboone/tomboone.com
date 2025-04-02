@@ -8,5 +8,5 @@ itsdangerous==2.2.0
 Jinja2==3.1.6
 MarkupSafe==3.0.2
 SQLAlchemy==2.0.40
-typing_extensions==4.12.2
+typing_extensions==4.13.0
 Werkzeug==3.1.3

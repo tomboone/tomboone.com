@@ -5,7 +5,8 @@
       "samplingSettings": {
         "isEnabled": true,
         "percentage": 10
-      }
+      },
+      "enablePerformanceCountersCollection": false
     },
     "logLevel": {
       "default": "Warning"

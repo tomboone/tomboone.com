@@ -1,0 +1,7 @@
+# Exclude everything by default
+*
+
+# Then include only what we want
+!index.html
+!images/
+!images/**

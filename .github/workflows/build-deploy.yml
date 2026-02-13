@@ -9,6 +9,7 @@ on:
       - 'terraform/**'
       - 'index.html'
       - 'images/**'
+      - 'records/**'
       - '.github/workflows/build-deploy.yml'
   workflow_dispatch:
 

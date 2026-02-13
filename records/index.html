@@ -17,6 +17,7 @@
     --open-text: #7fcc7f;
     --closed-text: #9a7a5a;
     --border: #333;
+    --link: #c9a55a;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -120,12 +121,39 @@
     font-weight: 600;
     font-size: 0.95rem;
     margin-bottom: 0.15rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
-  .store-area { color: var(--text-muted); font-size: 0.78rem; }
+  .store-name a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: #e8e4df30;
+    text-underline-offset: 2px;
+    transition: color 0.15s ease, text-decoration-color 0.15s ease;
+  }
+
+  .store-name a:hover {
+    color: var(--link);
+    text-decoration-color: var(--link);
+  }
+
+  .store-meta {
+    color: var(--text-muted);
+    font-size: 0.78rem;
+  }
+
+  .store-meta a {
+    color: var(--text-muted);
+    text-decoration: underline;
+    text-decoration-color: #8a858040;
+    text-underline-offset: 2px;
+    margin-left: 0.4rem;
+    transition: color 0.15s ease, text-decoration-color 0.15s ease;
+  }
+
+  .store-meta a:hover {
+    color: var(--link);
+    text-decoration-color: var(--link);
+  }
 
   .store-hours {
     font-size: 0.85rem;
@@ -198,46 +226,88 @@
 <script>
 const stores = [
   { name: "The Hip Hop Shop", area: "Rockville, MD", region: "MD",
+    url: "https://www.hiphopmuseumdc.org/",
+    address: "326 N Stonestreet Ave #A2, Rockville, MD 20850",
     hours: { Mon: "11 AM – 7 PM", Tue: "11 AM – 7 PM", Wed: "11 AM – 7 PM", Thu: "11 AM – 7 PM", Fri: "11 AM – 7 PM", Sat: null, Sun: null }},
   { name: "Dave's Golden Oldies", area: "Gaithersburg, MD", region: "MD",
+    url: null,
+    address: "223 E Diamond Ave, Gaithersburg, MD 20877",
     hours: { Mon: "10 AM – 5 PM", Tue: "10 AM – 5 PM", Wed: "10 AM – 5 PM", Thu: "10 AM – 5 PM", Fri: "10 AM – 5 PM", Sat: "10 AM – 5 PM", Sun: "10 AM – 5 PM" }},
-  { name: "Second Story Books", area: "Rockville, MD (books + vinyl)", region: "MD",
+  { name: "Second Story Books", area: "Rockville, MD", region: "MD",
+    url: "https://www.secondstorybooks.com/",
+    address: "12160 Parklawn Dr, Rockville, MD 20852",
     hours: { Mon: "10 AM – 8 PM", Tue: "10 AM – 8 PM", Wed: "10 AM – 8 PM", Thu: "10 AM – 9 PM", Fri: "10 AM – 9 PM", Sat: "10 AM – 9 PM", Sun: "10 AM – 8 PM" }},
   { name: "Joe's Record Paradise", area: "Silver Spring, MD", region: "MD",
+    url: "https://www.joesrecordparadise.com/",
+    address: "8700 Georgia Ave, Silver Spring, MD 20910",
     hours: { Mon: null, Tue: null, Wed: null, Thu: null, Fri: "12 – 8 PM", Sat: "12 – 8 PM", Sun: "12 – 6 PM" }},
   { name: "Mojomala Books, Records & Cool Stuff", area: "Silver Spring, MD", region: "MD",
+    url: "https://mojomala.shoplightspeed.com/",
+    address: "8401 Colesville Rd #140, Silver Spring, MD 20910",
     hours: { Mon: null, Tue: "3 – 7 PM", Wed: "3 – 7 PM", Thu: "3 – 7 PM", Fri: "1 – 6 PM", Sat: "11 AM – 6 PM", Sun: "11 AM – 4 PM" }},
   { name: "Love People Records", area: "Kensington, MD", region: "MD",
+    url: "https://lovepeoplerecords.com/",
+    address: "10429 Fawcett St, Kensington, MD 20895",
     hours: { Mon: null, Tue: null, Wed: null, Thu: null, Fri: null, Sat: null, Sun: null }},
   { name: "Shady Lane Records", area: "Hyattsville, MD", region: "MD",
+    url: "https://www.instagram.com/shadylanerecords/",
+    address: "4208 Gallatin St, Hyattsville, MD 20781",
     hours: { Mon: null, Tue: null, Wed: null, Thu: "12 – 6 PM", Fri: "12 – 6 PM", Sat: "12 – 6 PM", Sun: "12 – 5 PM" }},
   { name: "Sonidos! Music & More", area: "Beltsville, MD", region: "MD",
+    url: "https://sonidosmusicshop.com/",
+    address: "11011-B Baltimore Ave, Beltsville, MD 20705",
     hours: { Mon: null, Tue: null, Wed: "1 – 6 PM", Thu: "1 – 6 PM", Fri: null, Sat: "12 – 6 PM", Sun: "12 – 5 PM" }},
-  { name: "Atomic Music", area: "Beltsville, MD (instruments + vinyl)", region: "MD",
+  { name: "Atomic Music", area: "Beltsville, MD", region: "MD",
+    url: "https://www.atomicmusic.com/",
+    address: "11011 Baltimore Ave b, Beltsville, MD 20705",
     hours: { Mon: "12 – 6 PM", Tue: "12 – 6 PM", Wed: "12 – 6 PM", Thu: "12 – 6 PM", Fri: "12 – 6 PM", Sat: "12 – 6 PM", Sun: "12 – 5 PM" }},
   { name: "The Record Exchange", area: "Frederick, MD", region: "MD",
+    url: "https://www.instagram.com/recordexchangefrederick/",
+    address: "410 N Market St, Frederick, MD 21701",
     hours: { Mon: "12 – 6 PM", Tue: "12 – 6 PM", Wed: "12 – 6 PM", Thu: "12 – 6 PM", Fri: "11 AM – 7 PM", Sat: "11 AM – 7 PM", Sun: "12 – 5 PM" }},
   { name: "Rock and Roll Graveyard", area: "Frederick, MD", region: "MD",
+    url: "https://www.instagram.com/rockandrollgraveyard/",
+    address: "115 E Patrick St, Frederick, MD 21701",
     hours: { Mon: "11 AM – 7 PM", Tue: "11 AM – 7 PM", Wed: "11 AM – 7 PM", Thu: "11 AM – 7 PM", Fri: "11 AM – 7 PM", Sat: "11 AM – 7 PM", Sun: "12 – 5 PM" }},
   { name: "Art Sound Language", area: "Chevy Chase, DC", region: "DC",
+    url: "https://artsoundlanguage.com/",
+    address: "5520 Connecticut Ave NW, Washington, DC 20015",
     hours: { Mon: null, Tue: null, Wed: "12 – 6 PM", Thu: "12 – 6 PM", Fri: "12 – 6 PM", Sat: "11 AM – 6 PM", Sun: "11 AM – 5 PM" }},
   { name: "Joint Custody (Takoma)", area: "Takoma, DC", region: "DC",
+    url: "https://jointcustodydc.com/",
+    address: "6918 4th St NW, Washington, DC 20012",
     hours: { Mon: "10 AM – 6 PM", Tue: "10 AM – 6 PM", Wed: "10 AM – 6 PM", Thu: "10 AM – 6 PM", Fri: "10 AM – 6 PM", Sat: "10 AM – 6 PM", Sun: "10 AM – 6 PM" }},
   { name: "Joint Custody (U St)", area: "U Street NW, DC", region: "DC",
+    url: "https://jointcustodydc.com/",
+    address: "1530 U St NW, Washington, DC 20009",
     hours: { Mon: "12 – 8 PM", Tue: "12 – 8 PM", Wed: "12 – 8 PM", Thu: "12 – 8 PM", Fri: "12 – 8 PM", Sat: "12 – 8 PM", Sun: "12 – 8 PM" }},
   { name: "Byrdland Records", area: "Union Market, DC", region: "DC",
+    url: "https://byrdlandrecords.com/",
+    address: "1264 5th St NE, Washington, DC 20002",
     hours: { Mon: null, Tue: "12 – 8 PM", Wed: "12 – 8 PM", Thu: "12 – 8 PM", Fri: "11 AM – 9 PM", Sat: "11 AM – 9 PM", Sun: "11 AM – 8 PM" }},
   { name: "Spin Time Records", area: "Capitol Hill, DC", region: "DC",
+    url: "https://spintimerecords.com/",
+    address: "613 Pennsylvania Ave SE Suite 2, Washington, DC 20003",
     hours: { Mon: null, Tue: "11 AM – 5 PM", Wed: "11 AM – 5 PM", Thu: "11 AM – 5 PM", Fri: "11 AM – 6 PM", Sat: "11 AM – 6 PM", Sun: null }},
   { name: "Som Records", area: "14th St NW, DC", region: "DC",
+    url: "https://somrecordsdc.com/",
+    address: "1843 14th St NW, Washington, DC 20009",
     hours: { Mon: "12 – 7 PM", Tue: "12 – 7 PM", Wed: "12 – 7 PM", Thu: "12 – 7 PM", Fri: "12 – 7 PM", Sat: "12 – 7 PM", Sun: "12 – 6 PM" }},
   { name: "Smash Records", area: "Adams Morgan, DC", region: "DC",
+    url: "https://smashrecords.com/",
+    address: "2314 18th St NW, Washington, DC 20009",
     hours: { Mon: "12 – 8 PM", Tue: "12 – 8 PM", Wed: "12 – 8 PM", Thu: "12 – 8 PM", Fri: "12 – 9 PM", Sat: "12 – 9 PM", Sun: "12 – 7 PM" }},
   { name: "Tiny Vinyl Shop", area: "Adams Morgan, DC", region: "DC",
+    url: "https://www.instagram.com/tinyvinylshop/",
+    address: "2501 Champlain St NW, Washington, DC 20009",
     hours: { Mon: "4 – 7 PM", Tue: "4 – 7 PM", Wed: "4 – 7 PM", Thu: "4 – 7 PM", Fri: "12 – 8 PM", Sat: "12 – 8 PM", Sun: "12 – 6 PM" }},
   { name: "Mobius Records", area: "Fairfax, VA", region: "VA",
+    url: "https://mobiusrecordshop.com/",
+    address: "10409 Main St D, Fairfax, VA 22030",
     hours: { Mon: "12 – 5 PM", Tue: "11 AM – 6 PM", Wed: "11 AM – 6 PM", Thu: "11 AM – 6 PM", Fri: "11 AM – 6 PM", Sat: "11 AM – 6 PM", Sun: "12 – 5 PM" }},
   { name: "Right On! Records", area: "Herndon, VA", region: "VA",
+    url: "https://www.instagram.com/rightonrecordsva/",
+    address: "731 Elden St #211, Herndon, VA 20170",
     hours: { Mon: null, Tue: null, Wed: null, Thu: "12 – 7 PM", Fri: "12 – 7 PM", Sat: "12 – 7 PM", Sun: "1 – 5 PM" }}
 ];
 
@@ -287,6 +357,10 @@ function sortName(name) {
   return name.replace(/^(the|a|an)\s+/i, '');
 }
 
+function mapsUrl(address) {
+  return "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(address);
+}
+
 function render() {
   const filtered = activeRegion === "All" ? stores : stores.filter(s => s.region === activeRegion);
   const sorted = [...filtered].sort((a, b) => {
@@ -309,10 +383,14 @@ function render() {
   list.innerHTML = sorted.map(s => {
     const hrs = s.hours[activeDay];
     const isOpen = hrs !== null;
+    const nameHtml = s.url
+      ? `<a href="${s.url}" target="_blank" rel="noopener">${s.name}</a>`
+      : s.name;
+    const directionsHtml = `<a href="${mapsUrl(s.address)}" target="_blank" rel="noopener">Directions</a>`;
     return `<div class="store-row">
         <div class="store-info">
-          <div class="store-name">${s.name}</div>
-          <div class="store-area">${s.area}</div>
+          <div class="store-name">${nameHtml}</div>
+          <div class="store-meta">${s.area} · ${directionsHtml}</div>
         </div>
         <div class="store-hours ${isOpen ? 'open' : 'closed'}">${isOpen ? hrs : 'Closed'}</div>
       </div>`;

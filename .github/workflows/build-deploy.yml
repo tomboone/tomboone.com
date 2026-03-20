@@ -1,12 +1,12 @@
 #file: noinspection UndefinedAction
-name: Terraform, Build, and Deploy to Stage
+name: Build and Deploy to Stage
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'terraform/**'
+      - 'infrastructure/**'
       - 'index.html'
       - 'images/**'
       - 'records/**'
@@ -22,11 +22,11 @@ env:
   ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
   ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
   ARM_USE_OIDC: true
-  TF_WORKING_DIR: ./terraform
+  TF_WORKING_DIR: ./infrastructure
 
 jobs:
-  terraform:
-    name: Terraform
+  opentofu:
+    name: OpenTofu
     runs-on: ubuntu-latest
 
     env:
@@ -50,30 +50,30 @@ jobs:
           tenant-id: ${{ env.ARM_TENANT_ID }}
           subscription-id: ${{ env.ARM_SUBSCRIPTION_ID }}
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v4
+      - name: Setup OpenTofu
+        uses: opentofu/setup-opentofu@v1
         with:
-          terraform_wrapper: false
+          tofu_wrapper: false
 
-      - name: Terraform Init
+      - name: OpenTofu Init
         working-directory: ${{ env.TF_WORKING_DIR }}
         run: |
-          terraform init \
+          tofu init \
             -backend-config="resource_group_name=${{ env.TF_STATE_RG }}" \
             -backend-config="storage_account_name=${{ env.TF_STATE_SA }}" \
             -backend-config="container_name=${{ env.TF_STATE_CONTAINER }}" \
             -backend-config="key=${{ env.TF_STATE_KEY }}"
 
-      - name: Terraform Apply
+      - name: OpenTofu Apply
         working-directory: ${{ env.TF_WORKING_DIR }}
-        run: terraform apply -auto-approve
+        run: tofu apply -auto-approve
 
-      - name: Get Terraform Outputs
+      - name: Get OpenTofu Outputs
         id: get_outputs
         working-directory: ${{ env.TF_WORKING_DIR }}
         run: |
-          DEFAULT_HOST_NAME=$(terraform output -raw default_host_name)
-          API_KEY=$(terraform output -raw api_key)
+          DEFAULT_HOST_NAME=$(tofu output -raw default_host_name)
+          API_KEY=$(tofu output -raw api_key)
 
           echo "default_host_name=$DEFAULT_HOST_NAME" >> "$GITHUB_OUTPUT"
           echo "api_key=$API_KEY" >> "$GITHUB_OUTPUT"
@@ -81,11 +81,11 @@ jobs:
   deploy:
     name: Deploy to Azure Static Web App
     runs-on: ubuntu-latest
-    needs: terraform
+    needs: opentofu
     environment: production
 
     env:
-      API_KEY: ${{ needs.terraform.outputs.api_key }}
+      API_KEY: ${{ needs.opentofu.outputs.api_key }}
       REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:

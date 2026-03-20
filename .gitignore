@@ -5,3 +5,7 @@
 backend.hcl
 terraform.tfvars
 tfplan
+
+settings.local.json
+
+docs/superpowers

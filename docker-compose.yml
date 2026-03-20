@@ -1,0 +1,17 @@
+services:
+  web:
+    image: nginx:alpine
+    volumes:
+      - .:/usr/share/nginx/html:ro
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.tomboone.rule=Host(`tomboone.localhost`)"
+      - "traefik.http.routers.tomboone.tls=true"
+      - "traefik.http.routers.tomboone.entrypoints=websecure"
+      - "traefik.http.services.tomboone.loadbalancer.server.port=80"
+
+networks:
+  proxy:
+    external: true

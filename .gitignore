@@ -1,11 +1,9 @@
 .idea
 .DS_Store
 
-.terraform
-backend.hcl
-terraform.tfvars
-tfplan
+infrastructure/.terraform/
+infrastructure/*.tfstate
+infrastructure/*.tfstate.backup
+infrastructure/.terraform.lock.hcl
 
 settings.local.json
-
-docs/superpowers

@@ -29,12 +29,6 @@ jobs:
     name: OpenTofu
     runs-on: ubuntu-latest
 
-    env:
-      TF_STATE_RG: ${{ secrets.TF_STATE_RG }}
-      TF_STATE_SA: ${{ secrets.TF_STATE_SA }}
-      TF_STATE_CONTAINER: ${{ secrets.TF_STATE_CONTAINER }}
-      TF_STATE_KEY: ${{ secrets.TF_STATE_KEY }}
-
     outputs:
       default_host_name: ${{ steps.get_outputs.outputs.default_host_name }}
       api_key: ${{ steps.get_outputs.outputs.api_key }}
@@ -51,18 +45,13 @@ jobs:
           subscription-id: ${{ env.ARM_SUBSCRIPTION_ID }}
 
       - name: Setup OpenTofu
-        uses: opentofu/setup-opentofu@v1
+        uses: opentofu/setup-opentofu@v2
         with:
           tofu_wrapper: false
 
       - name: OpenTofu Init
         working-directory: ${{ env.TF_WORKING_DIR }}
-        run: |
-          tofu init \
-            -backend-config="resource_group_name=${{ env.TF_STATE_RG }}" \
-            -backend-config="storage_account_name=${{ env.TF_STATE_SA }}" \
-            -backend-config="container_name=${{ env.TF_STATE_CONTAINER }}" \
-            -backend-config="key=${{ env.TF_STATE_KEY }}"
+        run: tofu init
 
       - name: OpenTofu Apply
         working-directory: ${{ env.TF_WORKING_DIR }}

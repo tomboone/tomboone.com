@@ -1,23 +1,32 @@
 version: 2
 updates:
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: updates/dependencies
     schedule:
-      interval: "weekly"
-      day: "saturday"
+      interval: weekly
+      day: saturday
       time: "09:00"
-      timezone: "America/New_York"
+      timezone: America/New_York
+    commit-message:
+      prefix: ci
+    # The shared workflows float on @v1; bumping them is the workflows repo's job.
+    ignore:
+      - dependency-name: neuroticsasquat-ch/workflows
     groups:
-      all:
-        patterns: ["*"]
+      minor-and-patch:
+        update-types: [minor, patch]
 
-  - package-ecosystem: "terraform"
-    directory: "/infrastructure"
+  - package-ecosystem: terraform
+    directory: /infrastructure
+    target-branch: updates/dependencies
     schedule:
-      interval: "weekly"
-      day: "saturday"
+      interval: weekly
+      day: saturday
       time: "09:00"
-      timezone: "America/New_York"
+      timezone: America/New_York
+    commit-message:
+      prefix: chore
     groups:
-      all:
-        patterns: ["*"]
+      minor-and-patch:
+        update-types: [minor, patch]

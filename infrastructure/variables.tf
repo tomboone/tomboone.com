@@ -1,9 +1,9 @@
 variable "service_name" {
-  type = string
+  type    = string
   default = "tomboonedotcom"
 }
 
 variable "location" {
-  type = string
+  type    = string
   default = "East US 2"
 }
